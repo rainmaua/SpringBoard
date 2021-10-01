@@ -43,29 +43,7 @@ public class BoardController {
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
-//  Yi: Original boardList controller
-//	@RequestMapping(value = "/board/boardList.do" , method = RequestMethod.GET )  // Yi: removed (  )
-//	public String boardRead(Locale locale, Model model, PageVo pageVo) throws Exception{
-//		
-//		List<BoardVo> boardList = new ArrayList<BoardVo>();
-//		
-//		int page = 1;
-//		int totalCnt = 0;
-//		
-//		if(pageVo.getPageNo() == 0){
-//			pageVo.setPageNo(page);
-//		}
-//		
-//		boardList = boardService.SelectBoardList(pageVo);
-//		totalCnt = boardService.selectBoardCnt();
-//		
-//		
-//		model.addAttribute("boardList", boardList);
-//		model.addAttribute("totalCnt", totalCnt);
-//		model.addAttribute("pageNo", page);
-//		
-//		return "board/boardList";
-//	}
+
 	
 	
 	// 목록 페이지 이동 
@@ -79,24 +57,8 @@ public class BoardController {
 		List<ComCodeVo> selectKindList = new ArrayList<ComCodeVo>();
 		
 		int page = 1;
-//		int limit = 10; 
 		int totalCnt = 0; 
 
-//		if(request.getParameter("page")!= null) {
-//			page = Integer.parseInt(request.getParameter("page"));
-//		}
-
-//		int maxPage = (totalCnt + limit - 1)/limit;
-//		int startPage = ((page-1)/10) * 10 + 1; 
-//		
-//		int endPage = startPage + 10 - 1;
-//		if (endPage > maxPage) {
-//			endPage = maxPage;
-//		}
-//		if (endPage < page) {
-//			page = endPage; 
-//		}
-	
 		if(pageVo.getPageNo() == 0){
 			pageVo.setPageNo(page);
 		}
@@ -105,11 +67,7 @@ public class BoardController {
 		boardList = boardService.SelectBoardList(pageVo);
 		totalCnt = boardService.selectBoardCnt();
 		selectKindList = boardService.selectKindList(); 
-		
-//		model.addAttribute("page", page);
-//		model.addAttribute("maxPage", maxPage);
-//		model.addAttribute("startPage", startPage);
-//		model.addAttribute("endPage", endPage); 
+	
 		model.addAttribute("pageNo", page); 
 		model.addAttribute("boardList", boardList); 
 		model.addAttribute("totalCnt", totalCnt);
@@ -139,7 +97,13 @@ public class BoardController {
 	
 	// 글 작성 클릭시 글 작성 페이지로 이동 
 	@RequestMapping(value = "/board/boardWrite.do", method = RequestMethod.GET)
-	public String boardWrite(Locale locale, Model model) throws Exception{
+	public String boardWrite(Locale locale, Model model, HttpServletRequest request, BoardVo boardVo, ComCodeVo comCodeVo) throws Exception{
+		String [] codeId= request.getParameterValues("codeId");
+		List<ComCodeVo> selectKindList= new ArrayList<ComCodeVo>();
+		selectKindList= boardService.selectKindList(); 
+		
+		model.addAttribute("selectKindList", selectKindList); 
+		
 		return "board/boardWrite";
 	}
 	// 게시판 - 글 작성 처리 

@@ -27,4 +27,6 @@ public interface BoardDao {
 	public List<ComCodeVo> selectKindList() throws Exception;
 	
 	public int getKindCount() throws Exception; 
+	
+	
 }

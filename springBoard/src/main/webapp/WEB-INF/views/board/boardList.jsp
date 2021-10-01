@@ -12,25 +12,52 @@
  $j(document).ready(function() {
  	$j("#allCheck").click(function() {
  		/*alert("allCheck clicked!"); */
- 		if($j("#allCheck").prop("checked")){
- 			$j("input[type=checkbox]").prop("checked", true);
+ 		if($j(".check").prop("checked")){
+ 			$j(".check").prop("checked", true);
  		}
  		else{
- 			$j("input[type=checkbox]").prop("checked",false);
+ 			$j(".check").prop("checked",false);
  		}
+ 		
  	});
  	
+ 	var codeIdCount = ${fn:length(selectKindList)}; 
  	
-	 $j("#codeId").click(function(){
-		 if($j(this).prop('checked')) {
-			 $j('input[type="checkbox"][name="allCheck"]').prop("checked", false);
-			 $j(this).prop("checked", true); 
+	$j(".check").click(function(){
+		 if($j("input[name='codeId']:checked").length == codeIdCount) {
+			 $j("#allCheck").prop("checked", true); 
 		 } 
-	 });
+		 else{
+			 $j("#allCheck").prop("checked", false); 
+		 }
+	 }); 
  	
  	$j("#btn_read").click(function() {
-		 $j('#selectKind').submit(); 
-	 });
+ 		$j("#selectKind").submit(); 
+ 		
+ 		/* var $frm = $j('.selectKind :input');
+		var param = $frm.serialize();
+		alert(param); 
+ 		$j.ajax({
+		    url : "/board/boarList.do",
+		    dataType: "json",
+		    type: "GET",
+		    data : param,
+		    success: function(data, textStatus, jqXHR)
+		    {
+				alert("successfully submitted category");
+				
+				location.href = "/board/boardList.do?codeId="+param;  // Yi's code: pageNo= --> pageNo=1 --> +data.pageNo 20210928 and then adjusted boardWriteAction controller
+		    }, 
+		    error: function (jqXHR, textStatus, errorThrown)
+		    {
+		    	alert("½ÇÆÐ");
+		    }
+		});  // ajax */
+ 		
+	}); 
+ 	
+ 	
  });
  
 </script>
@@ -98,7 +125,11 @@
 		</td>
 
 	</tr> 
-		
+	<tr>
+	<td align="right">
+		${pageNo}
+	</td>
+	</tr>	
 </table>	
 <!-- </form> -->
 </body>

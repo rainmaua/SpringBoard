@@ -8,27 +8,28 @@
 <title>boardLogin</title>
 </head>
 <body>
-<tr>
-	<td>
-		<table id="boardTable" border = "1">
-			<tr>
-			<td width="80" align="left">
-			ID:
-			</td>
-			<td width="150">
+
+<table id="boardTable" border = "1">
+	<tr>
+		<td width="80" align="center">
+			id:
+		</td>
+		<td width="150">		
 			<input name="loginID" value="id"> 
-			</td>
-			</tr>
-			<tr>
-			<td width="40" align="left">
-			PASSWORD:
-			</td>
-			<td width="150">
+		</td>
+	</tr>
+	<tr>
+		<td width="40" align="center">
+			pw:
+		</td>
+		<td width="150">
 			<input name="loginPW" value="pw">
-			</td>
-			</tr>
-		</table>
-	</td>
-</tr>
+		</td>
+	</tr>
+	
+</table>
+
+	<a href="/board/boardList.do" >login</a>  <!--  Yi: change url -->
+	
 </body>
 </html>

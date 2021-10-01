@@ -28,13 +28,6 @@
 			}
 			
 			$j.ajax({
-				// (Yi's code)
-				// to send send-file form-data to ajax, we need to set enctype, processData, ContentType
-				/* enctype : 'multipart/form-data',
-				processData : false,
-				contentType : false,
-				cache : false,  */
-				//
 			    url : "/board/boardWriteAction.do",
 			    dataType: "json",
 			    type: "POST",
@@ -54,47 +47,113 @@
 			});  // ajax
 		}); // click 
 		
-	});			
-	$j(function() {
-		$j("#btn_add").on("click", function(){
- 			$j(".boardWrite").append(
- 			'<form class="boardWrite" id="form1" ><table align="center"><tr><td>	<table border ="1">	  <tr><td width="120" align="center"> Type </td> <td width="400"> <select name="boardType" id="boardType" value="${boardType}"> <option value="a01">일반</option> <option value="a02">Q&A</option>  <option value="a03">익명</option> <option value="a04">자유</option> </select> </td>  </tr>   <tr>	  <td width="120" align="center">	  Title	    </td>	 <td width="400">   <input name="boardTitle" type="text" size="50" value="${board.boardTitle}">	    </td>	  </tr>	    <tr >	  <td height="300" align="center">	   Comment	    </td>	   <td valign="top">	 <textarea name="boardComment"  rows="20" cols="55">${board.boardComment}</textarea></td></tr> </table></td></tr> </br></br></br>	</table>	</form>'	    				
- 			);	        
- 		});	    
 	});	
+	/* function addRow() {
+		var tableData = document.getElementById('table'); 
+		var row = tableData.insertRow(tableData.rows.length); 
+		
+		var cell1 = row.insertCell(0);
+		var cell2 = row.insertCell(1); 
+		
+		table.getElementsByTagName("tbody")[0].appendChild(tr); 
+		
+		$j("#table").append(
+				"<tr><td><input name = 'text'></td></tr>");  
+	} */
 	
+	/* var tbodyRef = document.getElementById('table').getElementsById('tbody')[0];
+	var newRow = tbodyRef.insertRow(); 
+	var newCell = newRow.insertCell(); 
+	var newText = document.createTextNode('new row'); 
+	newCell.appendChild(newText);  */
 	
+	$j(document).ready(function(){
+		$j("#btn_add").on("click", function(){
+ 			/* $j("").append(
+ 		    '<form class="boardWrite" id="form1" ><table align="center"><tr><td><table border ="1">	  <tr><td width="120" align="center"> Type </td> <td width="400"> <select name="boardType" id="boardType" value="${boardType}"> <option value="a01">일반</option> <option value="a02">Q&A</option>  <option value="a03">익명</option> <option value="a04">자유</option> </select> </td>  </tr>   <tr>	  <td width="120" align="center">	  Title	    </td>	 <td width="400">   <input name="boardTitle" type="text" size="50" value="${board.boardTitle}">	    </td>	  </tr>	    <tr >	  <td height="300" align="center">	   Comment	    </td>	   <td valign="top">	 <textarea name="boardComment"  rows="20" cols="55">${board.boardComment}</textarea></td></tr> </table></td></tr> </br></br></br>	</table>	</form>'	    				
+ 			);	        
+ 		}); */	    
+ 			$j.ajax({
+		    	url : "/board/boardWrite.do",
+		    	dataType: "json",
+		    	type: "GET",
+		    	data : {"testCd":$(this).attr("value")},
+		    	success: function(result) {	
+					var resultHtml = ""; 
+					for(var i=0; i < result.length; i++) {
+						resultHtml += "<tr>";
+						resultHtml += "<td>The table</td>";
+						resultHtml += "<td>is finally working!</td>";
+						resultHtml += "</tr>"; 
+					}
+		    	
+					$j("#DynamicTable").append(resultHtml);	
+		   		}, 
+		    
+		    	error: function (jqXHR, textStatus, errorThrown)
+		    	{
+		    		alert("실패");
+		   	 	}
+			});  // ajax
+   		}); // click
+	});	 // last
+	
+	/* var writeMore = $j('#tbodyWrite'); 
+	var i = $j('#tbodyWrite tr').size() + 1;
+	
+	$j(document).ready(function(){
+		$j('#btn_add').click(function() {
+			writeMore.append('<tr><td>Hello!<tr><td>');
+			i++ 
+			return false;
+		});
+	});  */
+	$j(document).ready(function(){
+		$j('#add').click(function() {
+			$j('#DynamicTable').append('<tr><td width="120" align="center">Type</td><td width="400"><select name="boardType" id="boardType" value="${boardType}"><c:forEach items="${selectKindList}" var="comCode" varStatus="status"><option type="checkbox" class="check" name="codeId" id="codeId" value="${comCode.codeId}">${comCode.codeName}</c:forEach></select></td></tr><tr><td width="120" align="center">Title</td><td width="400"><input name="boardTitle" id="boardTitle" type="text" size="50" value="${board.boardTitle}"> </td></tr><tr><td height="300" align="center">Comment</td><td valign="top"><textarea name="boardComment" id="boardComment" rows="20" cols="55">${board.boardComment}</textarea></td></tr><tr><td></td><td align="right"><button type="button" class="btn_remove_row">삭제</button></td></tr>');
+		}); 
+	});
+	$j(document).ready(function(){
+		$j(document).on('click','remove_row', function() {
+			var row_id = $j(this).attr("id"); 
+			$j("#row"+row_id+'').remove(); 
+		}); 
+	});
 	
 	
 
 </script>
 <body id="addForm"> <!-- <body onload="addForm();"> -->
-<form class="boardWrite" id="form1">  
-	<table align="center" class="table">
+<form class="boardWrite" id="form1">   
+	<table align="center" >
 		<tr>
 			<td align="right">
 			<input id="submit" type="button" value="작성">
-			<input id="btn_add" type="button" value="행추가">
-			<input id="pageNo" type="hidden" value="${pageNo}"> 
+			<input id="btn_add" type="button" value="행추가"> 
+			<button type= "button" id="add" class="btn_btn_add">행추가2</button>
+			<!-- <input type="button" value="행추가" onClick="addRow(this.parentNode.parentNode)" /> -->  			<!-- <a href="#" id="btn_add">행추가</a>  -->
+ 			<input id="pageNo" type="hidden" value="${pageNo}"> 
 			</td>
 		</tr>
 		<tr>
 			<td>
-				<table border ="1"> 
+				<table border ="1" id="writeTable"> 
+				<thread>
 					<tr>
 						<td width="120" align="center">
 						Type
 						</td>
 						<td width="400">
-					
 						<select name="boardType" id="boardType" value="${boardType}">
-							<option value="a01">일반</option>
-							<option value="a02">Q&A</option>  <!--  add an extra space to match 4byte at DB -->
-							<option value="a03">익명</option>
-							<option value="a04">자유</option>
-						</select>
+							<c:forEach items="${selectKindList}" var="comCode" varStatus="status">
+								<option type="checkbox" class="check" name="codeId" id="codeId" value="${comCode.codeId}">${comCode.codeName}
+							</c:forEach>
+						</select> 
 						</td>
 					</tr>
+				</thread>
+			<tbody id="DynamicTable">
+				
 					<tr>
 						<td width="120" align="center">
 						Title
@@ -111,6 +170,11 @@
 						<textarea name="boardComment" id="boardComment" rows="20" cols="55">${board.boardComment}</textarea>
 						</td>
 					</tr>
+			</tbody>	
+ 			
+ 			
+ 			
+ 			
 					<tr>
 						<td align="center">
 						Writer
@@ -118,6 +182,9 @@
 						<td>
 						</td>
 					</tr>
+					
+				
+					
 				</table>
 			</td>
 		</tr>

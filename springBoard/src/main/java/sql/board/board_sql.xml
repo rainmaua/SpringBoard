@@ -18,7 +18,19 @@
     	<result property="codeName" 	column="CODE_NAME"/>
 	</resultMap>
 	
-    <!--Yi : 게시글 목록 조회 -->
+	<resultMap type="com.spring.board.vo.userInfoVo" id="userInfoVo">
+		<result property="userId"       column="USER_ID"/>
+		<result property="userPw"   	column="USER_PW"/>
+		<result property="userName"		column="USER_NAME"/>
+		<result property="userPhone1"   column="USER_PHONE1"/>
+		<result property="userPhone2"   column="USER_PHONE2"/>
+		<result property="userPhone3"	column="USER_PHONE3"/>
+		<result property="userAddr1"    column="USER_ADDR1"/>
+		<result property="userAddr2"    column="USER_ADDR2"/>
+		<result property="userCompany"  column="USER_COMPANY"/>
+	</resultMap>
+	
+  <!--Yi : 게시글 목록 조회 -->
     <select id="boardList" parameterType="com.spring.board.vo.PageVo" resultMap="boardVo">
         SELECT 
           CODE_NAME
@@ -35,7 +47,7 @@
 				,BOARD_NUM
 				,BOARD_TITLE
 				,BOARD_COMMENT
-		      	,ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC) AS NUMROW
+		      	,ROW_NUMBER() OVER(ORDER BY BOARD_NUM DESC) AS NUMROW   <!-- changed DESC to ASC -->
 		      	,COUNT(*) OVER() AS TOTAL_CNT
 			FROM
 				BOARD, COM_CODE	
@@ -52,8 +64,6 @@
 			</trim> 
 			)
 		WHERE NUMROW BETWEEN (#{pageNo}-1)*10 + 1 AND (#{pageNo})*10 
-		<!--  20210928 boardNum 순서를 뒤집어줘야하나? OneNote link 참조할  --> 
-		
     </select>
     
     
@@ -73,7 +83,9 @@
 		  SELECT
 		      	COUNT(*) AS TOTAL_CNT
 			FROM
-				BOARD	
+				BOARD
+				
+			
     </select>
     
     <!-- Yi : 게시글 뷰 -->
@@ -115,6 +127,40 @@
         )
     </select>
     
+    
+    <select id="boardRegister" parameterType="com.spring.board.vo.userInfoVo">
+    	INSERT INTO 
+        USER_INFO
+        (USER_ID
+        ,USER_PW
+        ,USER_NAME
+        ,USER_PHONE1
+        ,USER_PHONE2
+        ,USER_PHONE3
+        ,USER_ADDR1
+        ,USER_ADDR2
+        ,USER_COMPANY
+        ,CREATOR
+        ,CREATE_TIME
+        ,MODIFIER
+        ,MODIFIED_TIME
+        )
+        VALUES
+        (#{userId}
+        ,#{userPw}
+        ,#{userName}
+        ,#{userPhone1}
+        ,#{userPhone2}
+        ,#{userPhone3}
+        ,#{userAddr1}
+        ,#{userAddr2}
+        ,#{userCompany}
+        ,'SYSTEM'
+        ,TO_CHAR(SYSDATE)
+        ,'SYSTEM'
+        ,TO_CHAR(SYSDATE)
+        )
+    </select>
     <!-- Yi : 게시글 수정 --> 
     <update id= "boardUpdate" parameterType="com.spring.board.vo.BoardVo" >
     	UPDATE BOARD 
