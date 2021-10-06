@@ -18,7 +18,7 @@
     	<result property="codeName" 	column="CODE_NAME"/>
 	</resultMap>
 	
-	<resultMap type="com.spring.board.vo.userInfoVo" id="userInfoVo">
+	<resultMap type="com.spring.board.vo.UserInfoVo" id="userInfoVo">
 		<result property="userId"       column="USER_ID"/>
 		<result property="userPw"   	column="USER_PW"/>
 		<result property="userName"		column="USER_NAME"/>
@@ -128,7 +128,7 @@
     </select>
     
     
-    <select id="boardRegister" parameterType="com.spring.board.vo.userInfoVo">
+<!--     <select id="boardRegister" parameterType="com.spring.board.vo.UserInfoVo">
     	INSERT INTO 
         USER_INFO
         (USER_ID
@@ -160,7 +160,7 @@
         ,'SYSTEM'
         ,TO_CHAR(SYSDATE)
         )
-    </select>
+    </select> -->
     <!-- Yi : 게시글 수정 --> 
     <update id= "boardUpdate" parameterType="com.spring.board.vo.BoardVo" >
     	UPDATE BOARD 

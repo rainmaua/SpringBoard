@@ -1,6 +1,6 @@
 package com.spring.board.vo;
 
-public class userInfoVo {
+public class UserInfoVo {
 	private String userId;
 	private String userPw;
 	private String userName;
@@ -11,9 +11,7 @@ public class userInfoVo {
 	private String userAddr2;
 	private String userCompany;
 	private String creator;
-	private String create_time;
-	private String modifier; 
-	private String modifiedTime;
+	private String modifier;
 	public String getUserId() {
 		return userId;
 	}
@@ -74,24 +72,12 @@ public class userInfoVo {
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
-	public String getCreate_time() {
-		return create_time;
-	}
-	public void setCreate_time(String create_time) {
-		this.create_time = create_time;
-	}
 	public String getModifier() {
 		return modifier;
 	}
 	public void setModifier(String modifier) {
 		this.modifier = modifier;
-	}
-	public String getModifiedTime() {
-		return modifiedTime;
-	}
-	public void setModifiedTime(String modifiedTime) {
-		this.modifiedTime = modifiedTime;
-	}
+	} 
 	
 	
 }

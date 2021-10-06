@@ -5,6 +5,7 @@ import java.util.List;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.ComCodeVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.UserInfoVo;
 
 public interface BoardDao {
 
@@ -28,5 +29,6 @@ public interface BoardDao {
 	
 	public int getKindCount() throws Exception; 
 	
+//	public int boardRegister(UserInfoVo userInfoVo) throws Exception; 
 	
 }

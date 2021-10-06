@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+    pageEncoding="EUC-KR" import="java.lang.String.*"%>  <!-- Yi: added import="java.lang.String.*" -->
 <%@include file="/WEB-INF/views/common/common.jsp"%>    
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -108,13 +109,15 @@
 			return false;
 		});
 	});  */
+	var i = 1; 
 	$j(document).ready(function(){
 		$j('#add').click(function() {
-			$j('#DynamicTable').append('<tr><td width="120" align="center">Type</td><td width="400"><select name="boardType" id="boardType" value="${boardType}"><c:forEach items="${selectKindList}" var="comCode" varStatus="status"><option type="checkbox" class="check" name="codeId" id="codeId" value="${comCode.codeId}">${comCode.codeName}</c:forEach></select></td></tr><tr><td width="120" align="center">Title</td><td width="400"><input name="boardTitle" id="boardTitle" type="text" size="50" value="${board.boardTitle}"> </td></tr><tr><td height="300" align="center">Comment</td><td valign="top"><textarea name="boardComment" id="boardComment" rows="20" cols="55">${board.boardComment}</textarea></td></tr><tr><td></td><td align="right"><button type="button" class="btn_remove_row">삭제</button></td></tr>');
+			$j('#DynamicTable').append('<tr id="row'+i+'"><td width="120" align="center">Type</td><td width="400"><select name="boardType" id="boardType" value="${boardType}"><c:forEach items="${selectKindList}" var="comCode" varStatus="status"><option type="checkbox" class="check" name="codeId" id="codeId" value="${comCode.codeId}">${comCode.codeName}</c:forEach></select></td></tr><tr><td width="120" align="center">Title</td><td width="400"><input name="boardTitle" id="boardTitle" type="text" size="50" value="${board.boardTitle}"> </td></tr><tr><td height="300" align="center">Comment</td><td valign="top"><textarea name="boardComment" id="boardComment" rows="20" cols="55">${board.boardComment}</textarea></td></tr><tr><td></td><td align="right"><button type="button" id="'+i+'" class="btn btn_danger remove_row">삭제</button></td></tr>');
 		}); 
 	});
 	$j(document).ready(function(){
 		$j(document).on('click','remove_row', function() {
+			alert('delete btn clicked');
 			var row_id = $j(this).attr("id"); 
 			$j("#row"+row_id+'').remove(); 
 		}); 
@@ -171,10 +174,6 @@
 						</td>
 					</tr>
 			</tbody>	
- 			
- 			
- 			
- 			
 					<tr>
 						<td align="center">
 						Writer
@@ -182,9 +181,6 @@
 						<td>
 						</td>
 					</tr>
-					
-				
-					
 				</table>
 			</td>
 		</tr>

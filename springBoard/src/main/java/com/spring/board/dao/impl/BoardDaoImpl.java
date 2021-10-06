@@ -11,6 +11,7 @@ import com.spring.board.dao.BoardDao;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.ComCodeVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.UserInfoVo;  
 
 @Repository
 public class BoardDaoImpl implements BoardDao{
@@ -67,10 +68,14 @@ public class BoardDaoImpl implements BoardDao{
 	
 	@Override
 	public int getKindCount() throws Exception {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("board.getKindCount");
 	}
-	
+
+//	@Override
+//	public int boardRegister(UserInfoVo userInfoVo) throws Exception {
+//		// Yi: board.boardRegister or userInfo.boardRegister??
+//		return sqlSession.insert("board.boardRegister", userInfoVo); 
+//	}
 }
 
 

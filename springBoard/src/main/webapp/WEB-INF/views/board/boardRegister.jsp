@@ -7,22 +7,56 @@
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>boardRegister</title>
 </head>
+<script type="text/javascript">
+
+	$j(document).ready(function(){
+		
+		$j("#btn_register").on("click", function(){
+			var $frm = $j('.boardRegiser :input');
+			var param = $frm.serialize();
+			
+			
+			$j.ajax({
+			    url : "/board/boardRegisterAction.do",
+			    dataType: "json",
+			    type: "POST",
+			    data : param,
+			    success: function(data, textStatus, jqXHR)
+			    {
+					alert("작성완료");
+					
+					alert("메세지:"+data.success);
+					<!-- Yi: after success, the web browser will show this page --> 
+					location.href = "/board/boardList.do?pageNo="+data.pageNo;  // Yi's code: pageNo= --> pageNo=1 --> +data.pageNo 20210928 and then adjusted boardWriteAction controller
+			    }, 
+			    error: function (jqXHR, textStatus, errorThrown)
+			    {
+			    	alert("실패");
+			    }
+			});  // ajax
+		}); // click 
+		
+	});	
+</script>
 <body>
 <form class="boardRegister">
-	<table>
-	회원가입
+	
+	<p style="text-align:left;">회원가입</p>
+	
 	<tr>
 	<td>
 	<a href="/board/boardList.do">List</a>
 	</td>
 	</tr>
 	<table id="boardRegister" border="1">
+		<tbody>
 		<tr>
 			<td width="80" align="center">
 				id
 			</td>
 			<td width="300">
-				<input name="userId" id="userId" value="${userId}">
+				<input name="userId" id="userId" value="${userId}"> 
+				<button class="btn_id_Check" onclick="registerCheckFunction();" type="button" >중복확인</button>
 			</td>
 		</tr>
 		<tr>
@@ -30,7 +64,7 @@
 				pw
 			</td>
 			<td width="300">
-				<input name="userPw" id="userPw" value="${userPw}" size="0">
+				<input name="userPw" id="userPw" value="${userPw}" type="password">
 			</td>
 		</tr>
 		<tr>
@@ -84,11 +118,12 @@
 				<input name="userCompany" id="userCompany" value="${userCompany}">
 			</td>
 		</tr>
-		
+		</tbody>
 	</table>
 	</br>
-	<tr aligh="right">
-		<td align="right">
+	<table>
+	<tr>
+		<td width="393" align="right" >
 			<input name="btn_register" id="btn_register" value="join" type="submit"> 
 		</td>
 	</tr>

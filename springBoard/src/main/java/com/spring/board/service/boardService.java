@@ -6,6 +6,7 @@ import java.util.Map;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.ComCodeVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.UserInfoVo;
 
 public interface boardService {
 
@@ -33,8 +34,12 @@ public interface boardService {
 	// 게시글 수정 
 	public int boardUpdate(BoardVo boardVo) throws Exception; 
 	
-	//게시글 삭제 
+	// 게시글 삭제 
 	public int boardDelete(BoardVo boardVo) throws Exception; 
+	
+//	// 회원가입
+//	public int boardRegister(UserInfoVo userInfoVo) throws Exception; 
+	
 	
 	
 

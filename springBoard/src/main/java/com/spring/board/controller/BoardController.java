@@ -40,17 +40,13 @@ public class BoardController {
 	@Autowired 
 	boardService boardService;
 	
-	
-	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 
-	
-	
 	// 목록 페이지 이동 
 	@RequestMapping(value = "/board/boardList.do" , method = RequestMethod.GET )  // Yi: removed (  )
 	public String boardList(Locale locale, Model model, PageVo pageVo, 
-				HttpServletRequest request) throws Exception{
-
+				BoardVo boardVo, HttpServletRequest request) throws Exception{
+		
 		String [] codeId = request.getParameterValues("codeId"); 
 	
 		List<BoardVo> boardList = new ArrayList<BoardVo>(); 
@@ -58,6 +54,7 @@ public class BoardController {
 		
 		int page = 1;
 		int totalCnt = 0; 
+		int resultCnt = boardService.selectBoardCnt(); 
 
 		if(pageVo.getPageNo() == 0){
 			pageVo.setPageNo(page);
@@ -134,6 +131,22 @@ public class BoardController {
 		return callbackMsg;
 	}
 	
+//	// 게시판 - 회원가입 
+//		@RequestMapping(value = "/board/boardRegisterAction.do", method = RequestMethod.POST)
+//		@ResponseBody
+//		public String boardRegisterAction(Locale locale, BoardVo boardVo, UserInfoVo userInfoVo) throws Exception{
+//			
+//			HashMap<String, String> result = new HashMap<String, String>();
+//			CommonUtil commonUtil = new CommonUtil();
+//			
+//			result.put("success", (resultCnt > 0)?"Y":"N");
+//			String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
+//			
+//			System.out.println("callbackMsg::"+callbackMsg);
+//			
+//			return callbackMsg;
+//		}
+	
 	// 게시판 - 삭제 처리 
 	@RequestMapping(value="/board/boardDelete.do", method = RequestMethod.POST)
 	@ResponseBody // you should add this when you're returning callbackMsg/json data 
@@ -189,13 +202,13 @@ public class BoardController {
 		return "board/boardUpdate"; 
 	}
 	
-	// login page 
+	// 게시판 - 로그인 페이지 이
 	@RequestMapping(value = "/board/boardLogin.do", method = RequestMethod.GET)
 	public String boardLogin(Locale locale, Model model) throws Exception{
 		return "board/boardLogin";
 	}
 	
-	// registration page
+	// 게시판 - 회원가입 이미지 이동 
 	@RequestMapping(value = "/board/boardRegister.do", method = RequestMethod.GET)
 	public String boardRegister(Locale locale, Model model) throws Exception{
 		return "board/boardRegister";

@@ -11,6 +11,7 @@ import com.spring.board.service.boardService;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.ComCodeVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.UserInfoVo;
 
 @Service
 public class boardServiceImpl implements boardService{
@@ -75,6 +76,15 @@ public class boardServiceImpl implements boardService{
 		// TODO Auto-generated method stub
 		return boardDao.getKindCount();
 	}
+
+//	@Override
+//	public int boardRegister(UserInfoVo userInfoVo) throws Exception {
+//		// TODO Auto-generated method stub
+//		return boardDao.boardRegister(userInfoVo);
+//	}
+
+
+	
 	
 	
 
