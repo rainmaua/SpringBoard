@@ -49,7 +49,7 @@ $j(document).ready(function(){
 <form class="boardView" id="boardView" name="boardView" action="board/boardDelete.do" >  <!-- (Yi's modification): original code: <form class="boardWrite"> -->
 	<table align="center">
 		<tr>
-			<td align="right"> 																<!-- I'm not sure whehter I can leave pageNo=1 instead of pageNo=${pageNo}   '/board/${board.boardType}/${board.boardNum}/boardUpdate.do?pageNo=${pageNo}'> -->
+			<td align="right"> 																<!-- I'm not sure whether I can leave pageNo=1 instead of pageNo=${pageNo}   '/board/${board.boardType}/${board.boardNum}/boardUpdate.do?pageNo=${pageNo}'> -->
 			<input id ="btn_update" type="button" class="btn_update" value="수정" onclick="location.href='/board/${board.boardType}/${board.boardNum}/boardUpdate.do?pageNo=1';" />
 			<input id="btn_delete" type="button" class="btn_delete" value="삭제">
 			<input type= "hidden" name="boardNum" value="${board.boardNum}">		

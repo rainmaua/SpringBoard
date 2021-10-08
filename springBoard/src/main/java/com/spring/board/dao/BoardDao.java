@@ -19,7 +19,7 @@ public interface BoardDao {
 
 	public int boardInsert(BoardVo boardVo) throws Exception;
 	
-//	// Yi's code
+	// Yi's code	
 	public int boardUpdate(BoardVo boardVo) throws Exception; 
 	
 	public int boardDelete(BoardVo boardVo) throws Exception;
@@ -29,6 +29,8 @@ public interface BoardDao {
 	
 	public int getKindCount() throws Exception; 
 	
-//	public int boardRegister(UserInfoVo userInfoVo) throws Exception; 
+	
+	
+	public int boardRegister(UserInfoVo userInfoVo) throws Exception; 
 	
 }

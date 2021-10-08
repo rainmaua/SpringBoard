@@ -71,11 +71,11 @@ public class BoardDaoImpl implements BoardDao{
 		return sqlSession.selectOne("board.getKindCount");
 	}
 
-//	@Override
-//	public int boardRegister(UserInfoVo userInfoVo) throws Exception {
-//		// Yi: board.boardRegister or userInfo.boardRegister??
-//		return sqlSession.insert("board.boardRegister", userInfoVo); 
-//	}
+	@Override
+	public int boardRegister(UserInfoVo userInfoVo) throws Exception {
+		// Yi: board.boardRegister or userInfo.boardRegister??
+		return sqlSession.insert("board.boardRegister", userInfoVo); 
+	}
 }
 
 

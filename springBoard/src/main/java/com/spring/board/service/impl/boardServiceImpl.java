@@ -1,5 +1,6 @@
 package com.spring.board.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -72,16 +73,15 @@ public class boardServiceImpl implements boardService{
 	}
 
 	@Override
-	public int getKindCount(Map map) throws Exception {
-		// TODO Auto-generated method stub
+	public int getKindCount(String boardType) throws Exception {
 		return boardDao.getKindCount();
 	}
 
-//	@Override
-//	public int boardRegister(UserInfoVo userInfoVo) throws Exception {
-//		// TODO Auto-generated method stub
-//		return boardDao.boardRegister(userInfoVo);
-//	}
+
+	@Override
+	public int boardRegister(UserInfoVo userInfoVo) throws Exception {
+		return boardDao.boardRegister(userInfoVo);
+	}
 
 
 	

@@ -1,5 +1,6 @@
 package com.spring.board.service;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,7 @@ public interface boardService {
 	public List<ComCodeVo> selectKindList() throws Exception;
 	
 	// 게시글 카테고리별 갯수 
-	public int getKindCount(Map map) throws Exception; 
+	public int getKindCount(String boardType) throws Exception; 
 	
 	// 게시글 조회
 	public BoardVo selectBoard(String boardType, int boardNum) throws Exception;
@@ -37,8 +38,8 @@ public interface boardService {
 	// 게시글 삭제 
 	public int boardDelete(BoardVo boardVo) throws Exception; 
 	
-//	// 회원가입
-//	public int boardRegister(UserInfoVo userInfoVo) throws Exception; 
+	// 회원가입
+	public int boardRegister(UserInfoVo userInfoVo) throws Exception; 
 	
 	
 	

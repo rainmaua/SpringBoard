@@ -79,6 +79,16 @@
 			CODE_TYPE = 'menu'
     </select>
     
+    <select id="selectPhoneList" parameterType="com.spring.board.vo.ComCodeVo" resultMap="comCodeVo">
+    	SELECT
+    		CODE_NAME
+    		,CODE_ID
+    	FROM 
+    		COM_CODE
+    	WHERE
+    		CODE_TYPE = 'phone' 
+    </select>
+    <!-- 회원가입 시작 20211008 -->
     <select id="boardTotal" parameterType="Integer" resultType="Integer">
 		  SELECT
 		      	COUNT(*) AS TOTAL_CNT
@@ -86,6 +96,13 @@
 				BOARD
 				
 			
+    </select>
+    
+    <select id="getKindCount" parameterType = "Integer" resultType = "Integer"> 
+    	SELECT 
+    		COUNT(*) AS TOTAL_CNT
+    	FROM 
+    		BOARD 
     </select>
     
     <!-- Yi : 게시글 뷰 -->
@@ -128,7 +145,7 @@
     </select>
     
     
-<!--     <select id="boardRegister" parameterType="com.spring.board.vo.UserInfoVo">
+   <select id="boardRegister" parameterType="com.spring.board.vo.UserInfoVo">
     	INSERT INTO 
         USER_INFO
         (USER_ID
@@ -147,20 +164,20 @@
         )
         VALUES
         (#{userId}
-        ,#{userPw}
-        ,#{userName}
-        ,#{userPhone1}
-        ,#{userPhone2}
-        ,#{userPhone3}
-        ,#{userAddr1}
-        ,#{userAddr2}
-        ,#{userCompany}
+        ,#{userPw, jdbcType=VARCHAR}
+        ,#{userName, jdbcType=VARCHAR}
+        ,#{userPhone1, jdbcType=VARCHAR}
+        ,#{userPhone2, jdbcType=VARCHAR}
+        ,#{userPhone3, jdbcType=VARCHAR}
+        ,#{userAddr1, jdbcType=VARCHAR}
+        ,#{userAddr2, jdbcType=VARCHAR}
+        ,#{userCompany, jdbcType=VARCHAR}
         ,'SYSTEM'
         ,TO_CHAR(SYSDATE)
         ,'SYSTEM'
         ,TO_CHAR(SYSDATE)
         )
-    </select> -->
+    </select> 
     <!-- Yi : 게시글 수정 --> 
     <update id= "boardUpdate" parameterType="com.spring.board.vo.BoardVo" >
     	UPDATE BOARD 

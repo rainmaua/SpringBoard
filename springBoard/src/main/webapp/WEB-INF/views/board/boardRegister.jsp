@@ -12,22 +12,23 @@
 	$j(document).ready(function(){
 		
 		$j("#btn_register").on("click", function(){
-			var $frm = $j('.boardRegiser :input');
+			var $frm = $j('.boardRegister :input');
 			var param = $frm.serialize();
-			
+			alert(param);   
 			
 			$j.ajax({
-			    url : "/board/boardRegisterAction.do",
+				
+			    url : "/board/boardRegisterAction.do", 
 			    dataType: "json",
 			    type: "POST",
 			    data : param,
 			    success: function(data, textStatus, jqXHR)
 			    {
-					alert("작성완료");
+					alert("회원가입 완료!");
 					
 					alert("메세지:"+data.success);
 					<!-- Yi: after success, the web browser will show this page --> 
-					location.href = "/board/boardList.do?pageNo="+data.pageNo;  // Yi's code: pageNo= --> pageNo=1 --> +data.pageNo 20210928 and then adjusted boardWriteAction controller
+					location.href = "/board/boardList.do";  // Yi's code: pageNo= --> pageNo=1 --> +data.pageNo 20210928 and then adjusted boardWriteAction controller
 			    }, 
 			    error: function (jqXHR, textStatus, errorThrown)
 			    {
@@ -36,7 +37,7 @@
 			});  // ajax
 		}); // click 
 		
-	});	
+	});	// ready
 </script>
 <body>
 <form class="boardRegister">
@@ -64,7 +65,7 @@
 				pw
 			</td>
 			<td width="300">
-				<input name="userPw" id="userPw" value="${userPw}" type="password">
+				<input name="userPw" id="userPw" value="${userPw}">
 			</td>
 		</tr>
 		<tr>
@@ -72,9 +73,9 @@
 				pw check
 			</td>
 			<td width="300">
-				<input name="pwCheck" id="pwCheck" value="${userPw}">
+				<input name="pwCheck" id="pwCheck" >
 			</td>
-		</tr>
+		</tr> 
 		<tr>
 			<td width="80" align="center">
 				name
@@ -120,14 +121,14 @@
 		</tr>
 		</tbody>
 	</table>
-	</br>
-	<table>
-	<tr>
+		</br>
+	
+		<tr>
 		<td width="393" align="right" >
 			<input name="btn_register" id="btn_register" value="join" type="submit"> 
 		</td>
-	</tr>
-	</table>
+		</tr>
+
 </form>
 
 </body>

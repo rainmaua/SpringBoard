@@ -164,6 +164,38 @@ $j(document).ready(function(){
     			$('#result').append('<p>'+this.value);
     	}); 
     });  */
+    
+    
+    
+    $j("#btn_add").on("click", function(){
+ 			/* $j("").append(
+ 		    '<form class="boardWrite" id="form1" ><table align="center"><tr><td><table border ="1">	  <tr><td width="120" align="center"> Type </td> <td width="400"> <select name="boardType" id="boardType" value="${boardType}"> <option value="a01">일반</option> <option value="a02">Q&A</option>  <option value="a03">익명</option> <option value="a04">자유</option> </select> </td>  </tr>   <tr>	  <td width="120" align="center">	  Title	    </td>	 <td width="400">   <input name="boardTitle" type="text" size="50" value="${board.boardTitle}">	    </td>	  </tr>	    <tr >	  <td height="300" align="center">	   Comment	    </td>	   <td valign="top">	 <textarea name="boardComment"  rows="20" cols="55">${board.boardComment}</textarea></td></tr> </table></td></tr> </br></br></br>	</table>	</form>'	    				
+ 			);	        
+ 		}); */	    
+ 			$j.ajax({
+		    	url : "/board/boardWrite.do",
+		    	dataType: "json",
+		    	type: "GET",
+		    	data : {"testCd":$(this).attr("value")},
+		    	success: function(result) {	
+					var resultHtml = ""; 
+					for(var i=0; i < result.length; i++) {
+						resultHtml += "<tr>";
+						resultHtml += "<td>The table</td>";
+						resultHtml += "<td>is finally working!</td>";
+						resultHtml += "</tr>"; 
+					}
+		    	
+					$j("#DynamicTable").append(resultHtml);	
+		   		}, 
+		    
+		    	error: function (jqXHR, textStatus, errorThrown)
+		    	{
+		    		alert("실패");
+		   	 	}
+			});  // ajax
+   		}); // click
+    
 	<tr>
 <td align="right">
 <button id="btn_update" type="button" class="btn_update">수정</button>

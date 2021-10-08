@@ -32,6 +32,7 @@ import com.spring.board.service.boardService;
 import com.spring.board.vo.BoardVo;
 import com.spring.board.vo.ComCodeVo;
 import com.spring.board.vo.PageVo;
+import com.spring.board.vo.UserInfoVo;
 import com.spring.common.CommonUtil;
 
 @Controller
@@ -54,7 +55,6 @@ public class BoardController {
 		
 		int page = 1;
 		int totalCnt = 0; 
-		int resultCnt = boardService.selectBoardCnt(); 
 
 		if(pageVo.getPageNo() == 0){
 			pageVo.setPageNo(page);
@@ -96,7 +96,9 @@ public class BoardController {
 	@RequestMapping(value = "/board/boardWrite.do", method = RequestMethod.GET)
 	public String boardWrite(Locale locale, Model model, HttpServletRequest request, BoardVo boardVo, ComCodeVo comCodeVo) throws Exception{
 		String [] codeId= request.getParameterValues("codeId");
+
 		List<ComCodeVo> selectKindList= new ArrayList<ComCodeVo>();
+		
 		selectKindList= boardService.selectKindList(); 
 		
 		model.addAttribute("selectKindList", selectKindList); 
@@ -106,46 +108,70 @@ public class BoardController {
 	// 게시판 - 글 작성 처리 
 	@RequestMapping(value = "/board/boardWriteAction.do", method = RequestMethod.POST)
 	@ResponseBody
-	public String boardWriteAction(Locale locale, BoardVo boardVo, PageVo pageVo) throws Exception{
+	public String boardWriteAction(Locale locale, BoardVo boardVo, PageVo pageVo,
+			HttpServletRequest request) throws Exception{
+		// Yi: 체크박스는 한가지 variable을 배열로 만들어 여러가지 값을 넣어주는 거였고, 
+		// 행추가는 여러 variable들을 배열로 만들어 여러가지 값을 넣어준다,
+		// 배열 덕분에 split을 쓰지 않고도, 여러가지 값을 하나의 variable에 저장할 수 있다.
+
+		String [] boardType = request.getParameterValues("boardType"); 
+		String [] boardTitle = request.getParameterValues("boardTitle");
+		String [] boardComment = request.getParameterValues("boardComment"); 
 		
-		HashMap<String, String> result = new HashMap<String, String>();
+		List<BoardVo> boardList = new ArrayList<BoardVo>(); 
+		
+		HashMap<String, Object> result = new HashMap<String, Object>();
 		CommonUtil commonUtil = new CommonUtil();
 		
-		// 전체 게시글 개수를 얻어와 resultCnt에 저장 
-		int resultCnt = boardService.boardInsert(boardVo);
 		
-		// page 변수 추가 
-		int page = 1; 
-		if(pageVo.getPageNo() == 0){
-			pageVo.setPageNo(page);;
+		for (int i=0; i < boardTitle.length; i++) {
+			boardVo.setBoardType(boardType[i]); 
+			boardVo.setBoardTitle(boardTitle[i]);
+			boardVo.setBoardComment(boardComment[i]); 
+			
+			System.out.println("Hey! boardTitle: " + boardTitle[i]);
+			// 전체 게시글 개수를 얻어와 resultCnt에 저장 
+			int resultCnt = boardService.boardInsert(boardVo);
+			
+			// page 변수 추가 
+			int page = 1; 
+			if(pageVo.getPageNo() == 0){
+				pageVo.setPageNo(page);;
+			}
+			String pageNo = Integer.toString(pageVo.getPageNo()); 
+			result.put("pageNo", pageNo); 
+			
+			result.put("boardType", boardType); 
+			result.put("boardTitle", boardTitle); 
+			result.put("boardComment", boardComment); 
+			result.put("boardList", boardList); 
+			result.put("success", (resultCnt > 0)?"Y":"N");
+		
 		}
-		String pageNo = Integer.toString(pageVo.getPageNo()); 
-		result.put("pageNo", pageNo); 
-
-	
-		result.put("success", (resultCnt > 0)?"Y":"N");
+		// send all data from boardWrite.jsp as a callbackMsg 
 		String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
-		
 		System.out.println("callbackMsg::"+callbackMsg);
-		
 		return callbackMsg;
 	}
 	
-//	// 게시판 - 회원가입 
-//		@RequestMapping(value = "/board/boardRegisterAction.do", method = RequestMethod.POST)
-//		@ResponseBody
-//		public String boardRegisterAction(Locale locale, BoardVo boardVo, UserInfoVo userInfoVo) throws Exception{
-//			
-//			HashMap<String, String> result = new HashMap<String, String>();
-//			CommonUtil commonUtil = new CommonUtil();
-//			
-//			result.put("success", (resultCnt > 0)?"Y":"N");
-//			String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
-//			
-//			System.out.println("callbackMsg::"+callbackMsg);
-//			
-//			return callbackMsg;
-//		}
+	// 게시판 - 회원가입 
+		@RequestMapping(value = "/board/boardRegisterAction.do", method = RequestMethod.POST)
+		@ResponseBody
+		public String boardRegisterAction(Locale locale, BoardVo boardVo, UserInfoVo userInfoVo) throws Exception{
+			
+			HashMap<String, String> result = new HashMap<String, String>();
+			CommonUtil commonUtil = new CommonUtil();
+			
+			int resultCnt = boardService.boardRegister(userInfoVo);  // ?? 
+			
+			result.put("Temporary", "hello"); 
+			result.put("success", (resultCnt > 0)?"Y":"N");
+			String callbackMsg = commonUtil.getJsonCallBackString(" ",result);
+			
+			System.out.println("callbackMsg::"+callbackMsg);
+			
+			return callbackMsg;
+		}
 	
 	// 게시판 - 삭제 처리 
 	@RequestMapping(value="/board/boardDelete.do", method = RequestMethod.POST)
@@ -202,7 +228,7 @@ public class BoardController {
 		return "board/boardUpdate"; 
 	}
 	
-	// 게시판 - 로그인 페이지 이
+	// 게시판 - 로그인 페이지 이동 
 	@RequestMapping(value = "/board/boardLogin.do", method = RequestMethod.GET)
 	public String boardLogin(Locale locale, Model model) throws Exception{
 		return "board/boardLogin";

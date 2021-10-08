@@ -18,7 +18,6 @@
  		else{
  			$j(".check").prop("checked",false);
  		}
- 		
  	});
  	
  	var codeIdCount = ${fn:length(selectKindList)}; 
@@ -32,29 +31,9 @@
 		 }
 	 }); 
  	
+	
  	$j("#btn_read").click(function() {
  		$j("#selectKind").submit(); 
- 		
- 		/* var $frm = $j('.selectKind :input');
-		var param = $frm.serialize();
-		alert(param); 
- 		$j.ajax({
-		    url : "/board/boarList.do",
-		    dataType: "json",
-		    type: "GET",
-		    data : param,
-		    success: function(data, textStatus, jqXHR)
-		    {
-				alert("successfully submitted category");
-				
-				location.href = "/board/boardList.do?codeId="+param;  // Yi's code: pageNo= --> pageNo=1 --> +data.pageNo 20210928 and then adjusted boardWriteAction controller
-		    }, 
-		    error: function (jqXHR, textStatus, errorThrown)
-		    {
-		    	alert("½ÇÆÐ");
-		    }
-		});  // ajax */
- 		
 	}); 
  	
  	
